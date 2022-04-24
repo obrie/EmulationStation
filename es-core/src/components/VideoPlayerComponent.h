@@ -26,6 +26,8 @@ public:
 	// Never breaks the aspect ratio. setMaxSize() and setResize() are mutually exclusive.
 	void setMaxSize(float width, float height);
 
+	static pid_t cPlayerPid;
+
 private:
 	// Start the video Immediately
 	virtual void startVideo();

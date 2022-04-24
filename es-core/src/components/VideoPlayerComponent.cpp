@@ -16,6 +16,8 @@ public:
 	int getVolume() const;
 };
 
+pid_t VideoPlayerComponent::cPlayerPid = -1;
+
 VideoPlayerComponent::VideoPlayerComponent(Window* window, std::string path) :
 	VideoComponent(window),
 	mPlayerPid(-1),
@@ -88,6 +90,7 @@ void VideoPlayerComponent::startVideo()
 			else if (pid > 0)
 			{
 				mPlayerPid = pid;
+				VideoPlayerComponent::cPlayerPid = pid;
 				// Update the playing state
 				signal(SIGCHLD, catch_child);
 				mIsPlaying = true;
@@ -239,7 +242,7 @@ void catch_child(int sig_num)
 {
     /* when we get here, we know there's a zombie child waiting */
     int child_status;
-    wait(&child_status);
+    waitpid(VideoPlayerComponent::cPlayerPid, &child_status, WNOHANG);
 }
 
 void VideoPlayerComponent::stopVideo()
