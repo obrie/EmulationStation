@@ -241,7 +241,7 @@ void VideoPlayerComponent::startVideo()
 void catch_child(int sig_num)
 {
     /* when we get here, we know there's a zombie child waiting */
-    if (mPlayerPid != -1)
+    if (VideoPlayerComponent::cPlayerPid != -1)
     {
 	    int child_status;
 	    waitpid(VideoPlayerComponent::cPlayerPid, &child_status, WNOHANG);
